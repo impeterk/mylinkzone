@@ -1,11 +1,15 @@
-<script lang="ts" setup></script>
+<script setup lang="ts">
+definePageMeta({
+  title: 'Your One Link 2'
+})
+</script>
 
 <template>
-  <div>
-    Page: foo
-<NuxtLink to="/fesak">fesak</NuxtLink>
-
-  </div>
+  <UCard>
+    Welcome to Your Link Zone
+  </UCard>
 </template>
+
+
 
 <style scoped></style>
