@@ -1,29 +1,27 @@
 <script lang="ts" setup>
 const route = useRoute()
-
-// useHead({
-//   titleTemplate: '%s - Site Title',
-// })
+const url = useRequestURL()
+const description = 'Elevate your digital identity with Your one link. Unleash creativity, effortlessly share your story. Your connections, your canvas.'
 
 useSeoMeta({
   title: () => `${route.meta.title ?? 'Your One Link'} - My Link Zone`,
-  ogTitle: 'My Amazing Site',
-  description: 'This is my amazing site, let me tell you all about it.',
-  ogDescription: 'This is my amazing site, let me tell you all about it.',
-  ogImage: 'https://example.com/image.png',
-  twitterCard: 'summary_large_image',
+  ogTitle: () => `${route.meta.title ?? 'Your One Link'} - My Link Zone`,
+  description,
+  ogDescription: description,
+  ogUrl: () => `${url.href}`,
+  ogType: 'website'
 })
 </script>
 
 <template>
   <div class="layout">
     <Header />
-    <UContainer>
-      <main>
+    <main>
+        <UContainer>
         
         <slot />
+      </UContainer>
       </main>
-    </UContainer>
       <Footer />
   </div>
 </template>

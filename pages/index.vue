@@ -5,9 +5,7 @@ definePageMeta({
 </script>
 
 <template>
-  <UCard>
-    Welcome to Your Link Zone
-  </UCard>
+  <Hero />
 </template>
 
 
