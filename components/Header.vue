@@ -24,20 +24,12 @@ const links = [[], [
           <Icon name="mdi:link-box-variant-outline" class="text-4xl" />
           <span>My<span class="text-primary mx-0.5 font-sans">Link</span>Zone</span>
         </ULink>
-        <UHorizontalNavigation :links="links" v-if="!user">
+        <UHorizontalNavigation :links="links" v-if="!user" :ui="{ label: 'max-sm:hidden' }">
           <template #icon="{ link }">
             <Icon :name="link.icon" class="size-5" />
           </template>
         </UHorizontalNavigation>
         <ButtonLogOut v-if="user" />
-        <!-- <ul class="flex gap-4 items-center "> -->
-        <!--   <li v-for="{label, to, icon} in links" :key="label"> -->
-        <!--     <ULink  :to="to" active-class="underline underline-offset-8 decoration-primary" class="flex items-center gap-2"  > -->
-        <!--       <Icon :name="icon" class="text-2xl" /> -->
-        <!--       {{ label }} -->
-        <!--     </ULink> -->
-        <!--   </li> -->
-        <!-- </ul> -->
       </nav>
     </UContainer>
   </header>
