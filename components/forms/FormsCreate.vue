@@ -1,37 +1,54 @@
 <script setup lang="ts">
+import { z } from 'zod'
+import type { FormSubmitEvent } from '#ui/types'
 const route = useRoute()
-import type { FormError, FormSubmitEvent } from '#ui/types'
-import { useDocument } from 'vuefire'
-import { collection, query, where, getDocs } from "firebase/firestore";
-const db = useFirestore()
 
-const state = reactive({
-  username: route.query.username
+const schema = z.object({
+  username: z.string().min(3, 'Username must be at least 3 characters long').max(20, 'Username must be max 20 characters long')
 })
 
-const avalable = useUsername()
+type Schema = z.output<typeof schema>
+const state = reactive({
+  username: String(route.query.username),
+  unavailable: false,
+  loading: false
+})
 
-const validate = (state: any): FormError[] => {
-  const errors = []
-  if (!state.username) errors.push({ path: 'username', message: 'Required' })
-  return errors
+
+
+
+async function onSubmit(event: FormSubmitEvent<Schema>) {
+  await checkUsername(event.data.username)
 }
 
-async function onSubmit (event: FormSubmitEvent<any>) {
-  const {docs}= await getDocs(query(collection(db, "users"), where("name", "==", state.username)));
-  if (!docs.length) avalable.value = true
-  console.log(avalable.value)
+async function checkUsername(username: string) {
+  state.unavailable = false
+  state.loading = true
+  const { available, taken } = await $fetch('/api/getuser', {
+    method: 'post',
+    body: { username: username }
+  })
+  if (taken) state.unavailable = true
+  if (available) useUsername().value = true
+  state.loading = false
 }
+
+if (state.username) checkUsername(state.username)
 </script>
 
 <template>
-  <UForm :validate="validate" :state="state" class="space-y-4" @submit="onSubmit">
+  <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
     <UFormGroup label="UserName" name="username" size="xl" color="slate">
-      <UInput v-model="state.username"  class="text-center" placeholder="Enter desired username" :ui="{base: 'text-center !text-xl'}"  />
+      <UInput v-model="state.username" class="text-center" placeholder="Enter desired username"
+        :disabled="useUsername().value" :ui="{ base: 'text-center !text-xl' }" />
+      <p v-if="state.unavailable" class="mt-2 text-red-500 dark:text-red-400 text-base flex gap-1 ">
+        Sorry
+        <Icon name="solar:sad-square-outline" class="size-5" /> This username is already taken
+      </p>
     </UFormGroup>
 
-    <UButton type="submit" block size="xl">
-      Claim Your Username
+    <UButton type="submit" block size="xl" :disabled="useUsername().value" :loading="state.loading">
+      {{ state.loading ? 'Claiming your Username' : 'Claim Your Username' }}
     </UButton>
   </UForm>
 </template>
