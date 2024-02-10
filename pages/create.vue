@@ -2,19 +2,23 @@
 definePageMeta({
   title: 'Create New Account'
 })
-const avalable = useUsername()
 
 </script>
 
 <template>
-  <div class="max-w-lg mx-auto">
+  <div class="max-w-lg text-pretty mx-auto">
     <UCard>
-      <section class="prose dark:prose-invert text-center text-pretty my-8">
+      <section class="prose dark:prose-invert text-center">
         <h1>Create New Account</h1>
         <p class="text-balance">Claim your UNIQUE user name and create new account in moments with preffered provider</p>
       </section>
       <FormsCreate />
-      <p v-if="avalable">Your username can be added</p>
+      <section class="space-y-4" v-if="useState('username').value">
+        <div class="prose dark:prose-invert text-center">
+          <h4 class="">Continue to create your account with one of our supported providers</h4>
+        </div>
+        <Providers />
+      </section>
     </UCard>
   </div>
 </template>

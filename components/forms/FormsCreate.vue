@@ -9,13 +9,10 @@ const schema = z.object({
 
 type Schema = z.output<typeof schema>
 const state = reactive({
-  username: String(route.query.username),
+  username: String(route.query.username ?? useUsername().value ?? ''),
   unavailable: false,
   loading: false
 })
-
-
-
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   await checkUsername(event.data.username)
@@ -26,29 +23,33 @@ async function checkUsername(username: string) {
   state.loading = true
   const { available, taken } = await $fetch('/api/getuser', {
     method: 'post',
-    body: { username: username }
+    body: { username }
   })
   if (taken) state.unavailable = true
-  if (available) useUsername().value = true
+  if (available) useUsername().value = username
   state.loading = false
 }
 
-if (state.username) checkUsername(state.username)
+if (state.username && !useUsername().value) checkUsername(state.username)
 </script>
 
 <template>
-  <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+  <UForm :schema="schema" :state="state" class="space-y-4 my-4" @submit="onSubmit">
     <UFormGroup label="UserName" name="username" size="xl" color="slate">
       <UInput v-model="state.username" class="text-center" placeholder="Enter desired username"
-        :disabled="useUsername().value" :ui="{ base: 'text-center !text-xl' }" />
+        :disabled="Boolean(useUsername().value)" :ui="{ base: 'text-center !text-xl' }" />
       <p v-if="state.unavailable" class="mt-2 text-red-500 dark:text-red-400 text-base flex gap-1 ">
         Sorry
         <Icon name="solar:sad-square-outline" class="size-5" /> This username is already taken
       </p>
     </UFormGroup>
 
-    <UButton type="submit" block size="xl" :disabled="useUsername().value" :loading="state.loading">
+    <UButton type="submit" :color="Boolean(useUsername().value) ? 'gray' : 'primary'" block size="xl"
+      :disabled="Boolean(useUsername().value)" :loading="state.loading">
       {{ state.loading ? 'Claiming your Username' : 'Claim Your Username' }}
+      <Icon v-if="Boolean(useUsername().value)" name="material-symbols:check-circle-outline-rounded"
+        class="text-green-500 dark:text-green-400 size-5" />
+
     </UButton>
   </UForm>
 </template>

@@ -1,1 +1,1 @@
-export const useUsername= () => useState<boolean>('username', () => false)
+export const useUsername = () => useState<null | string>('username', () => null)

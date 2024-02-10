@@ -21,7 +21,11 @@ export default defineNuxtConfig({
   },
   vuefire: {
     auth: {
-      enabled: true
+      enabled: true,
+      sessionCookie: true,
+      errorMap: 'debug',
+      // disable the poupup redirect resolver dependency
+      popupRedirectResolver: false,
     },
     config: {
       apiKey: "AIzaSyAEHDXETOhuKe-AWLfPHCeaAD7CDUE_np8",
