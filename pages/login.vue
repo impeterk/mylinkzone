@@ -6,7 +6,7 @@
 definePageMeta({
   title: 'Sign in to your account'
 })
-
+useState('username').value = null
 </script>
 
 <template>

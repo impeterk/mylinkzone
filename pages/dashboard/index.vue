@@ -6,7 +6,7 @@
   <section>
     <Suspense>
       <template #default>
-        <UserPage />
+        <Dashboard />
       </template>
       <template #fallback>
         <p>Loading...</p>

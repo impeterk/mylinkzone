@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' }
+  },
   modules: [
     "nuxt-icon",
     "@nuxt/image",
@@ -25,7 +28,7 @@ export default defineNuxtConfig({
       sessionCookie: true,
       errorMap: 'debug',
       // disable the poupup redirect resolver dependency
-      popupRedirectResolver: false,
+      popupRedirectResolver: 'browser',
     },
     config: {
       apiKey: "AIzaSyAEHDXETOhuKe-AWLfPHCeaAD7CDUE_np8",

@@ -11,9 +11,11 @@ async function logOut() {
 </script>
 
 <template>
-  <UButton size="xl" label="Log Out" color="gray" @click.prevent.stop="logOut">
-    <Icon name="lucide:log-out" /> <span>Log Out</span>
+  <form @submit.prevent="logOut">
+  <UButton size="xl" label="Log Out" color="gray" type="submit">
+    <Icon name="lucide:log-out" /> <span class="max-sm:hidden">Log Out</span>
   </UButton>
+</form >
 </template>
 
 <style scoped></style>

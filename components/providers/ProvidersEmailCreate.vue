@@ -22,16 +22,26 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   state.loading = true
   state.error = false
   const { email, password } = event.data
-  await createUserWithEmailAndPassword(auth, email, password).then(() => {
+  try {
+   const {user} =  await createUserWithEmailAndPassword(auth, email, password)
+   console.log(user)
+    await $fetch('/api/createpage', {
+      method: 'POST',
+      body: { user, name: useState('username').value }
+    })
     state.loading = false
+    useState('username').value = null
     navigateTo('/dashboard')
-  }).catch((e: any) => {
+  } catch (e) {
     state.error = e.code
     state.loading = false
-  })
-
-
+    throw new Error(e.code)
+  }
 }
+
+
+
+
 </script>
 
 <template>

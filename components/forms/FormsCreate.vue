@@ -40,7 +40,7 @@ if (state.username && !useUsername().value) checkUsername(state.username)
         :disabled="Boolean(useUsername().value)" :ui="{ base: 'text-center !text-xl' }" />
       <p v-if="state.unavailable" class="mt-2 text-red-500 dark:text-red-400 text-base flex gap-1 ">
         Sorry
-        <Icon name="solar:sad-square-outline" class="size-5" /> This username is already taken
+        <Icon name="solar:sad-square-outline" class="size-5" /> This username is not available
       </p>
     </UFormGroup>
 

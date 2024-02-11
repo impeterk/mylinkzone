@@ -5,8 +5,7 @@ import ProvidersEmailLogin from './providers/ProvidersEmailLogin.vue';
 
 <template>
   <div class="space-y-4">
-    <ProvidersGoogle />
-    <ProvidersGithub />
+    <ProvidersOAuth/>
     <UDivider label="OR" />
     <component :is="$route.path == '/create' ? ProvidersEmailCreate : ProvidersEmailLogin" />
   </div>
