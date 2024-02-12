@@ -38,10 +38,10 @@ async function handleSubmit(event: FormSubmitEvent<Schema>) {
     state.link = undefined
 }
 const userData = useUserdata()
-async function handleButtonClick(index: number, handler: string) {
-    const linkToRemove = state.pageData.links[index]
+async function handleButtonClick(handler: string, index = 0) {
     switch (handler) {
         case 'remove':
+            const linkToRemove = state.pageData?.links[index]
             return await updateDoc(docRef, {
                 links: arrayRemove(linkToRemove)
             })
@@ -71,14 +71,14 @@ async function handleChangeUserdata() {
             :description="state.pageData?.description">
             <UButton icon="i-heroicons-pencil-square" size="sm" color="primary"
                 class="absolute top-0 -translate-y-full translate-x-full right-0" square variant="outline"
-                @click.prevent="handleButtonClick(0, 'edit')" />
+                @click.prevent="handleButtonClick('edit')" />
         </UserpageHero>
         <ul class=" space-y-4 mt-32" ref="linkList">
             <UserpageLink v-for="({ service, link }, index) in state.pageData?.links" :key="link" :service :link>
                 <template #default>
                     <div class="space-x-4">
                         <UButton icon="i-heroicons-x-mark" size="sm" color="red" square variant="outline"
-                            @click.prevent="handleButtonClick(index, 'remove')" />
+                            @click.prevent="handleButtonClick('remove', index)" />
                         <!-- <UButton icon="i-heroicons-pencil-square" size="sm" color="primary" square variant="outline" -->
                         <!--     @click.prevent="handleButtonClick(index, 'edit')" /> -->
                     </div>
