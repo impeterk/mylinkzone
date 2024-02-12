@@ -67,9 +67,10 @@ async function handleChangeUserdata() {
 
 <template>
     <UContainer>
-        <UserpageHero :name="state.pageData?.name" :userImg="state.pageData?.userImg ?? null" :description="state.pageData?.description">
+        <UserpageHero :name="state.pageData?.name" :userImg="state.pageData?.userImg ?? null"
+            :description="state.pageData?.description">
             <UButton icon="i-heroicons-pencil-square" size="sm" color="primary"
-                class="absolute top-0 -translate-y-full translate-x-full -right-full" square variant="outline"
+                class="absolute top-0 -translate-y-full translate-x-full right-0" square variant="outline"
                 @click.prevent="handleButtonClick(0, 'edit')" />
         </UserpageHero>
         <ul class=" space-y-4 mt-32" ref="linkList">
