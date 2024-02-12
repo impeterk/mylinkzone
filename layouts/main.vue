@@ -3,8 +3,13 @@ const route = useRoute()
 const url = useRequestURL()
 const description = 'Elevate your digital identity with Your one link. Unleash creativity, effortlessly share your story. Your connections, your canvas.'
 
+useHead({
+  titleTemplate: (titleChunk) => {
+    return titleChunk || route.meta.title ? `${titleChunk || route.meta.title} - My Link Zone` : 'My Link Zone';
+  }
+})
+
 useSeoMeta({
-  title: () => `${route.meta.title ?? 'Your One Link'} - My Link Zone`,
   ogTitle: () => `${route.meta.title ?? 'Your One Link'} - My Link Zone`,
   description,
   ogDescription: description,
@@ -17,12 +22,12 @@ useSeoMeta({
   <div class="layout">
     <Header />
     <main>
-        <UContainer>
-        
+      <UContainer>
+
         <slot />
       </UContainer>
-      </main>
-      <Footer />
+    </main>
+    <Footer />
   </div>
 </template>
 

@@ -1,5 +1,11 @@
 <script lang="ts" setup>
+const user = await useFirebaseAuth()
 
+if (!user) navigateTo('/login')
+
+definePageMeta({
+  title: 'Dashboard'
+})
 </script>
 
 <template>
@@ -12,7 +18,7 @@
         <p>Loading...</p>
       </template>
     </Suspense>
-    </section>
+  </section>
 </template>
 
 <style scoped></style>

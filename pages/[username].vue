@@ -1,6 +1,8 @@
 <script lang="ts" setup>
-
+const route = useRoute()
+useHead({ title: route.params.username ?? '' })
 </script>
+
 
 <template>
   <section>
@@ -12,7 +14,7 @@
         <p>Loading...</p>
       </template>
     </Suspense>
-    </section>
+  </section>
 </template>
 
 <style scoped></style>

@@ -2,24 +2,27 @@
 import { collection, query, where, getDocs } from "firebase/firestore";
 const db = useFirestore()
 const route = useRoute()
-let pageData = ref(null)
+const state = reactive({
+  pageData: undefined
+})
 
 async function loadPageData() {
-  const {docs} = await getDocs(query(collection(db, "pages"), where("name", "==", route.params.username)))
-if (docs.length === 0) navigateTo('/')
-pageData.value = docs[0].data()
+  const { docs } = await getDocs(query(collection(db, "pages"), where("name", "==", route.params.username)))
+  if (docs.length === 0) navigateTo('/')
+  state.pageData = docs[0].data()
 }
 await loadPageData()
 </script>
 
 <template>
-    <UContainer >
-      <UserpageHero :name="pageData?.name" :userImg="pageData?.userImg ?? null" />
-      
-      <ul class="space-y-4 mt-32">
-          <UserpageLink v-for="{icon, url} in pageData?.value?.links" :key="url" :icon :url />
-        </ul>
-    </UContainer>
+  <UContainer>
+    <UserpageHero :name="state.pageData?.name" :userImg="state.pageData?.userImg ?? null"
+      :description="state.pageData?.description" />
+
+    <ul class="space-y-4 mt-32">
+      <UserpageLink v-for="{ service, link } in state.pageData?.links" :key="link" :service :link />
+    </ul>
+  </UContainer>
 </template>
 
 <style scoped></style>

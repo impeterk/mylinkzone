@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  title: 'Your One Link 2'
+  title: 'Your One Link '
 })
 </script>
 

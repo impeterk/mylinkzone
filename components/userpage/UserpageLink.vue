@@ -1,25 +1,30 @@
 <script lang="ts" setup>
 
 const props = defineProps({
-  icon: {
+  service: {
     type: String
   },
-  url: {
-    type:String
+  link: {
+    type: String
   }
 })
-
+const route = useRoute()
 </script>
 
 <template>
-  <UCard class="max-w-xl mx-auto ">
-    <div class="flex items-center gap-4">
-
-      <Icon :name="`simple-icons:${props.icon}`" class="size-8" />
-      <p class="text-xl">{{ props.url }}</p>
-    </div>
-  </UCard>
-
+  <li>
+    <ULink :to="props.link" target="_blank" :disabled="route.name === 'dashboard'">
+      <UCard class="max-w-2xl mx-auto ">
+        <div class="flex items-center gap-4">
+          <Icon :name="`mdi:${props.service}`" class="size-8" />
+          <a :href="props.link" class="text-xl" target="_blank">{{ props.service }}</a>
+          <div class="ml-auto">
+            <slot />
+          </div>
+        </div>
+      </UCard>
+    </ULink>
+  </li>
 </template>
 
 <style scoped></style>
